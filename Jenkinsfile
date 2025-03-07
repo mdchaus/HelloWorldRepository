@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Hello') {
             steps {
                        echo 'Hello, Jenkins!'
             }
