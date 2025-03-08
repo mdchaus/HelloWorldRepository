@@ -1,24 +1,33 @@
+
 pipeline {
     agent any
 
+   
     stages {
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
                 git branch: 'master', url: 'https://github.com/mdchaus/HelloWorldRepository.git'
             }
         }
 
-        stage('Hello') {
+        stage('Build') {
             steps {
-                       echo 'Hello, Jenkins!'
+                sh 'mvn clean package'  // Compiles, tests, and packages the application
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'  // Runs unit tests
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'scp -i target/app.jar ubuntu@13.49.46.127:/home/ubuntu/'
-                sh 'ssh -i ubuntu@13.49.46.127 "nohup java -jar /home/ubuntu/app.jar &"'
+                echo "Deploying application..."
+                // Add deployment steps here if needed
             }
         }
     }
 }
+
